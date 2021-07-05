@@ -1,0 +1,68 @@
+<!--
+ - Created by Dmitry Ivakhnenko on 29-Jun-2021.
+ -->
+
+<!-- Order Products -->
+<template>
+  <lightning-card title="Products in Order" icon-name="action:approval">
+    <template if:true={noRecords}>
+      <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-p-horizontal_small">
+        <thead>
+        <tr>
+          <th>Product Name</th>
+          <th>Unit Price</th>
+          <th>Quantity</th>
+          <th>Total Price</th>
+        </tr>
+        </thead>
+        <tbody>
+        <template for:each={orderItemsList} for:item="record">
+          <tr key={record.Product2.Name}
+              data-name={record.Product2.Name}
+              onclick={handleProductClick}>
+            <td>{record.Product2.Name}</td>
+            <td>{record.UnitPrice}</td>
+            <td>{record.Quantity}</td>
+            <td>{record.TotalPrice}</td>
+          </tr>
+        </template>
+        </tbody>
+      </table>
+
+    </template>
+
+    <template if:false={noRecords}>
+      <template if:true={error}>
+        <div class="slds-p-horizontal_medium slds-text-color_error">
+          An error occurred: {error}
+        </div>
+      </template>
+      <template if:false={error}>
+        <p class="slds-p-horizontal_medium">No products in this Order</p>
+      </template>
+    </template>
+
+    <lightning-layout horizontal-align="space">
+      <lightning-layout-item flexibility="auto" padding="around-small">
+        <lightning-button
+          class="slds-float_left"
+          variant="brand"
+          label="Save Order"
+          icon-name="utility:success"
+          onclick={handleSave}>
+        </lightning-button>
+      </lightning-layout-item>
+
+      <lightning-layout-item flexibility="auto" padding="around-small">
+        <lightning-button
+          class="slds-float_right"
+          variant="destructive"
+          label="Undo All Changes"
+          icon-name="utility:error"
+          icon-position="right"
+          onclick={handleCancel}>
+        </lightning-button>
+      </lightning-layout-item>
+    </lightning-layout>
+  </lightning-card>
+</template>

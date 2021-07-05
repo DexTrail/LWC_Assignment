@@ -1,0 +1,40 @@
+<!--
+ - Created by Dmitry Ivakhnenko on 29-Jun-2021.
+ -->
+
+<!-- Products List -->
+<template>
+  <lightning-card title="Available Products" icon-name="action:new_note">
+    <template if:true={pricebookEntries}>
+      <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-p-horizontal_small">
+        <thead>
+        <tr>
+          <th>Product Name</th>
+          <th>Unit Price</th>
+        </tr>
+        </thead>
+        <tbody>
+        <template for:each={pricebookEntries} for:item="record">
+          <tr key={record.Product2.Id}
+              data-id={record.Id} data-product-id={record.Product2.Id} data-name={record.Product2.Name} data-price={record.UnitPrice}
+              onclick={handleProductClick}>
+            <td>{record.Product2.Name}</td>
+            <td>{record.UnitPrice}</td>
+          </tr>
+        </template>
+        </tbody>
+      </table>
+    </template>
+
+    <template if:false={pricebookEntries}>
+      <template if:true={error}>
+        <div class="slds-p-horizontal_medium slds-text-color_error">
+          An error occurred: {error}
+        </div>
+      </template>
+      <template if:false={error}>
+        <p class="slds-p-horizontal_medium">No products available</p>
+      </template>
+    </template>
+  </lightning-card>
+</template>

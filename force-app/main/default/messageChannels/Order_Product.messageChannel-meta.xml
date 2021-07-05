@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<LightningMessageChannel xmlns="http://soap.sforce.com/2006/04/metadata">
+    <masterLabel>OrderProduct</masterLabel>
+    <isExposed>true</isExposed>
+    <description>Message Channel to pass Product in Order updates</description>
+    <lightningMessageFields>
+        <fieldName>productId</fieldName>
+        <description>Product Id</description>
+    </lightningMessageFields>
+    <lightningMessageFields>
+        <fieldName>productName</fieldName>
+        <description>Product Name</description>
+    </lightningMessageFields>
+    <lightningMessageFields>
+        <fieldName>productPrice</fieldName>
+        <description>Product Unit Price</description>
+    </lightningMessageFields>
+    <lightningMessageFields>
+        <fieldName>pricebookEntryId</fieldName>
+        <description>Pricebook Entry Id</description>
+    </lightningMessageFields>
+</LightningMessageChannel>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="IlluminatedCloudSettings">
+    <option name="connections">
+      <list>
+        <IlluminatedCloudConnection>
+          <option name="connectionName" value="Playground_LWC" />
+          <option name="connectionType" value="OAUTH" />
+          <option name="defaultModuleName" value="LWC_Assignment" />
+          <option name="offlineSymbolTablePath" value="$PROJECT_DIR$/IlluminatedCloud/Playground_LWC/OfflineSymbolTable.zip" />
+        </IlluminatedCloudConnection>
+      </list>
+    </option>
+  </component>
+</project>
