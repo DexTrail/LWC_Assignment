@@ -5,6 +5,7 @@
 <!-- Products List -->
 <template>
   <lightning-card title="Available Products" icon-name="action:new_note">
+    <!-- Products table -->
     <template if:true={pricebookEntries}>
       <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-p-horizontal_small">
         <thead>
@@ -26,9 +27,10 @@
       </table>
     </template>
 
+    <!-- Messages -->
     <template if:false={pricebookEntries}>
       <template if:true={error}>
-        <div class="slds-p-horizontal_medium slds-text-color_error">
+        <div class="slds-p-around_medium slds-text-color_error">
           An error occurred: {error}
         </div>
       </template>

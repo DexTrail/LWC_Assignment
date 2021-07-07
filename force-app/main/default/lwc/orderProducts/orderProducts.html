@@ -5,7 +5,13 @@
 <!-- Order Products -->
 <template>
   <lightning-card title="Products in Order" icon-name="action:approval">
-    <template if:true={noRecords}>
+    <!-- Info Messages -->
+    <template for:each={infoMessages} for:item="message">
+        <p key={message} class="slds-p-horizontal_medium slds-p-vertical_xx-small">{message}</p>
+    </template>
+
+    <!-- Order Items table -->
+    <template if:false={noRecords}>
       <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-p-horizontal_small">
         <thead>
         <tr>
@@ -28,39 +34,50 @@
         </template>
         </tbody>
       </table>
-
     </template>
 
-    <template if:false={noRecords}>
-      <template if:true={error}>
-        <div class="slds-p-horizontal_medium slds-text-color_error">
-          An error occurred: {error}
-        </div>
-      </template>
-      <template if:false={error}>
-        <p class="slds-p-horizontal_medium">No products in this Order</p>
-      </template>
+    <!-- Error Messages -->
+    <template if:true={error}>
+      <div class="slds-p-around_medium slds-text-color_error">
+        An error occurred: {error}
+      </div>
     </template>
 
+    <!-- Save Button -->
     <lightning-layout horizontal-align="space">
       <lightning-layout-item flexibility="auto" padding="around-small">
         <lightning-button
           class="slds-float_left"
           variant="brand"
-          label="Save Order"
-          icon-name="utility:success"
+          label="Save"
+          title="Save current Order"
+          icon-name="utility:save"
+          disabled={disableAllButtons}
           onclick={handleSave}>
         </lightning-button>
       </lightning-layout-item>
 
+      <!-- Confirm Button -->
+      <lightning-layout-item flexibility="auto" padding="around-small">
+        <lightning-button
+          label="Confirm"
+          title="Confirm the order and activate it"
+          icon-name="utility:success"
+          disabled={disableConfirmButton}
+          onclick={handleConfirm}>
+        </lightning-button>
+      </lightning-layout-item>
+
+      <!-- Undo Button -->
       <lightning-layout-item flexibility="auto" padding="around-small">
         <lightning-button
           class="slds-float_right"
           variant="destructive"
-          label="Undo All Changes"
-          icon-name="utility:error"
-          icon-position="right"
-          onclick={handleCancel}>
+          label="Undo Changes"
+          title="Undo any changes before the last save"
+          icon-name="utility:undo"
+          disabled={disableAllButtons}
+          onclick={handleUndo}>
         </lightning-button>
       </lightning-layout-item>
     </lightning-layout>
