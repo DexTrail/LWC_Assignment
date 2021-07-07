@@ -6,6 +6,7 @@ public with sharing class OrderProductsController {
 
     // This can be put in custom settings or custom metadata
     private static final String CONFIRM_ENDPOINT = 'https://pentagone.requestcatcher.com/';
+    private static final Integer CONFIRM_TIMEOUT = 10000;
 
 
     @AuraEnabled(Cacheable=true)
@@ -41,7 +42,7 @@ public with sharing class OrderProductsController {
         httpRequest.setMethod('POST');
         httpRequest.setHeader('Content-Type', 'application/json;charset=UTF-8');
         httpRequest.setBody(requestBody);
-        httpRequest.setTimeout(1000);
+        httpRequest.setTimeout(CONFIRM_TIMEOUT);
 
         HttpResponse httpResponse = new HttpResponse();
         try {
@@ -62,23 +63,46 @@ public with sharing class OrderProductsController {
                 throw ex;
             }
         }
-
         return orderConfirmed;
     }
 
+    /* Works nice in synchronous saves too */
     @AuraEnabled
-    public static List<OrderItem> saveOrderItems(List<OrderItem> orderItemsToUpsert, List<OrderItem> orderItemsToDelete) {
+    public static void saveOrderItems(List<OrderItem> orderItemsToUpsert, List<OrderItem> orderItemsToDelete) {
         Savepoint sp = Database.setSavepoint();
         try {
             if (orderItemsToUpsert != null && !orderItemsToUpsert.isEmpty()) upsert orderItemsToUpsert;
             if (orderItemsToDelete != null && !orderItemsToDelete.isEmpty()) delete orderItemsToDelete;
-            //throw new AuraHandledException('SOME ERROR');
+            //throw new AuraHandledException('SOME DML ERROR');  // For testing
         } catch (Exception ex) {
             Database.rollback(sp);
             System.debug(System.LoggingLevel.ERROR, ex.getMessage());
             throw ex;
         }
-        return orderItemsToUpsert;
+    }
+
+    @AuraEnabled
+    public static void queueSaveOrderItems(List<OrderItem> orderItemsToUpsert, List<OrderItem> orderItemsToDelete) {
+        System.enqueueJob(new SaveOrderAsync(orderItemsToUpsert, orderItemsToDelete));
+    }
+
+    @AuraEnabled
+    public static String getSaveAsyncStatus(Datetime asyncStartedDatetime) {
+        List<AsyncApexJob> jobs = [
+                SELECT Status
+                FROM AsyncApexJob
+                WHERE ApexClass.Name='SaveOrderAsync' AND CreatedDate >= :asyncStartedDatetime
+                AND CreatedById = :UserInfo.getUserId()
+        ];
+        Integer completedJobs = 0;
+        for (AsyncApexJob job : jobs) {
+            if (job.Status == 'Completed') {
+                completedJobs++;
+            } else if (job.Status == 'Failed') {
+                throw new AuraHandledException('Unknown error while saving order');
+            }
+        }
+        return (completedJobs == jobs.size() ? 'Completed' : 'Processing');
     }
 
 

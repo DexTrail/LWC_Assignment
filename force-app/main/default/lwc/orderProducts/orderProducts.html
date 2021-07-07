@@ -5,6 +5,11 @@
 <!-- Order Products -->
 <template>
   <lightning-card title="Products in Order" icon-name="action:approval">
+    <!-- Spinner -->
+    <template if:true={isShowSpinner}>
+      <lightning-spinner size="large"></lightning-spinner>
+    </template>
+
     <!-- Info Messages -->
     <template for:each={infoMessages} for:item="message">
         <p key={message} class="slds-p-horizontal_medium slds-p-vertical_xx-small">{message}</p>

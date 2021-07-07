@@ -47,6 +47,8 @@ public class TestData {
 
         Contract contract = new Contract(AccountId=account.Id, StartDate=Date.today(), ContractTerm=6, Status='Draft');
         insert contract;
+        contract.Status = 'Activated';
+        update contract;
 
         List<Order> orders = new List<Order>();
         orders.add(new Order(Name='Order1', Pricebook2Id=priceBooks[0].Id, AccountId=account.Id, ContractId=contract.Id,

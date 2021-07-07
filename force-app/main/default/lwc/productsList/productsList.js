@@ -9,8 +9,8 @@ import getPricebookEntries from '@salesforce/apex/ProductsListController.getPric
 
 export default class ProductsList extends LightningElement {
   @api recordId;
-  pricebookEntries;
   error;
+  pricebookEntries;
 
   @wire(MessageContext)
   messageContext;

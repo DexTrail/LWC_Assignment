@@ -8,17 +8,20 @@ import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import ORDER_PRODUCT_CHANNEL from '@salesforce/messageChannel/Order_Product__c';
 import getOrder from '@salesforce/apex/OrderProductsController.getOrder';
 import confirmOrder from '@salesforce/apex/OrderProductsController.confirmOrder';
-import saveOrderItems from '@salesforce/apex/OrderProductsController.saveOrderItems';
+import queueSaveOrderItems from '@salesforce/apex/OrderProductsController.queueSaveOrderItems';
+import getSaveAsyncStatus from '@salesforce/apex/OrderProductsController.getSaveAsyncStatus';
 
 export default class OrderProducts extends LightningElement {
   @api recordId;
-  error = undefined;
-  disableAllButtons;
+  asyncJobStartedDatetime;  // Timestamp when async saving was started. To narrow jobs in SOQL
+  error = undefined;  // Error to show to user
+  disableAllButtons;  // Disables everything. Change to spinner?
   disableConfirmButton;  // Disable it if Contract isn't Activated or Order has not order items (I don't think empty order should be Confirmed)
   infoMessages;  // Messages for user
   initialOrderItemsObj;  // To cancel all changes
   isContractInactive;  // Only Activated Contracts allow order activation
   isOrderActivated;  // Activated order can't be changed
+  isShowSpinner = false;  // TODO
   orderItemsList;  // List of Order Products to use on the page
   orderItemsObj = {};  // An easy way to find Order Products in
   noRecords;  // Show text messages instead of the records table
@@ -140,25 +143,83 @@ export default class OrderProducts extends LightningElement {
       });
   }
 
-  saveRecords(orderItemsToDelete) {
-    return saveOrderItems({
+  saveRecords(orderItemsToDelete, confirmOnComplete) {
+    const datetime = new Date(Date.now());
+    this.asyncJobStartedDatetime = datetime.toISOString();
+    return queueSaveOrderItems({
       orderItemsToUpsert: this.orderItemsList,
       orderItemsToDelete: orderItemsToDelete
     })
+      .then(() => { setTimeout(this.checkAsyncStatus.bind(this), 100, confirmOnComplete); })
+      .catch(error => this.errorHandler(error));
+  }
+
+  /* Multiple queueing adds much complexity because we don't have one job Id to check it.
+     And confirmation should start after successful save... oh... */
+  checkAsyncStatus(confirmOnComplete) {
+    getSaveAsyncStatus({ asyncStartedDatetime: this.asyncJobStartedDatetime })
       .then(result => {
-        this.processSuccessResult(result);
+        let isComplete = false;
+        if (result === 'Completed') {
+          isComplete = true;
+          this.initialOrderItemsObj = { ...this.orderItemsObj };
+
+          // Show toast message
+          this.dispatchEvent(new ShowToastEvent({
+            title: "Records saved",
+            message: "Order Items have been saved",
+            variant: "success"
+          }));
+        }
+        return isComplete;
+      })
+      .then(isComplete => {
+        if (isComplete) {
+          if (confirmOnComplete) {
+            this.confirmOrder();
+          } else {
+            this.enableButtons();
+          }
+        } else {
+          setTimeout(this.checkAsyncStatus.bind(this), 100, confirmOnComplete);
+        }
+      })
+      .catch(error => {
+        this.errorHandler(error);
+
+        // Show toast message
+        this.dispatchEvent(new ShowToastEvent({
+          title: "Records NOT saved",
+          message: "Order Items have NOT been saved",
+          variant: "error"
+        }));
+        this.enableButtons();
+      });
+  }
+
+  confirmOrder() {
+    return confirmOrder({ orderId: this.recordId })
+      .then(result => {
+        if (!result) {  // Order not confirmed
+          this.error = 'Unable to confirm order. Try again later';
+          return;
+        }
+
+        this.isOrderActivated = true;
         this.initialOrderItemsObj = { ...this.orderItemsObj };
 
         // Show toast message
-        const toastEvent = new ShowToastEvent({
-          title: "Records saved",
-          message: "Order Items have been saved",
+        this.dispatchEvent(new ShowToastEvent({
+          title: "Order confirmed",
+          message: "Order has been confirmed",
           variant: "success"
-        });
-        this.dispatchEvent(toastEvent);
+        }));
       })
       .catch(error => this.errorHandler(error))
-      .finally( () => this.updateOrderItemsList());
+      .finally(() => {
+        this.updateInfoMessages();
+        this.enableButtons();
+      });
   }
 
   processSuccessResult(orderItems) {
@@ -179,41 +240,16 @@ export default class OrderProducts extends LightningElement {
       );
   }
 
-  async handleConfirm() {
+  handleConfirm() {
     this.disableButtons();
     this.error = undefined;
 
     // Save order items before confirmation. No other info is changed by this LWC components
-    await this.saveRecords(this.getOrderItemsToDelete());
-
-    if (!this.error) {
-      await confirmOrder({ orderId: this.recordId })
-        .then(result => {
-          if (!result) {  // Order not confirmed
-            this.error = 'Unable to confirm order. Try again later';
-            return;
-          }
-
-          this.isOrderActivated = true;
-          this.initialOrderItemsObj = { ...this.orderItemsObj };
-
-          // Show toast message
-          const toastEvent = new ShowToastEvent({
-            title: "Order confirmed",
-            message: "Order has been confirmed",
-            variant: "success"
-          });
-          this.dispatchEvent(toastEvent);
-        })
-        .catch(error => this.errorHandler(error));
-    }
-
-    this.updateInfoMessages();
-    this.enableButtons();
+    this.saveRecords(this.getOrderItemsToDelete(), true);
   }
 
   handleOrderProductMessage(message) {
-    if (this.isOrderActivated) return; // Can't change Activated order
+    if (this.isOrderActivated || this.disableAllButtons) return; // Can't change Activated order
     this.error = undefined;
 
     const productId = message.productId;
@@ -245,7 +281,6 @@ export default class OrderProducts extends LightningElement {
     this.disableButtons();
     this.error = undefined;
     this.saveRecords(this.getOrderItemsToDelete());
-    this.enableButtons();
   }
 
   handleUndo() {
