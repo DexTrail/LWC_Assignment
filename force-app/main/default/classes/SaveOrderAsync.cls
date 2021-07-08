@@ -7,7 +7,7 @@ public without sharing class SaveOrderAsync implements Queueable {
     /* In case we need to process less records than 200.
        For example there are many flows and triggers and CPU limits are exceeded.
        It also allows to simulate many queues */
-    private static final Integer MAX_RECORDS = 1;
+    private static final Integer MAX_RECORDS = 100;
 
     private List<OrderItem> orderItemsToUpsert;
     private List<OrderItem> orderItemsToDelete;

@@ -71,8 +71,8 @@ public with sharing class OrderProductsController {
     public static void saveOrderItems(List<OrderItem> orderItemsToUpsert, List<OrderItem> orderItemsToDelete) {
         Savepoint sp = Database.setSavepoint();
         try {
-            if (orderItemsToUpsert != null && !orderItemsToUpsert.isEmpty()) upsert orderItemsToUpsert;
             if (orderItemsToDelete != null && !orderItemsToDelete.isEmpty()) delete orderItemsToDelete;
+            if (orderItemsToUpsert != null && !orderItemsToUpsert.isEmpty()) upsert orderItemsToUpsert;
             //throw new AuraHandledException('SOME DML ERROR');  // For testing
         } catch (Exception ex) {
             Database.rollback(sp);
