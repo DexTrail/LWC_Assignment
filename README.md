@@ -1,5 +1,8 @@
 # LWC Assignment
 
+[Video](https://youtu.be/INQqjjjytVI)
+(Unfortunately it's too bright. Some [screenshots](Pictures) to see true colors)
+
 ## Use Case:
 Build an order record page consisting of 2 LWC components
 1.	one which displays available products and 
