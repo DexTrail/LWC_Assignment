@@ -30,6 +30,12 @@ export default class OrderProducts extends LightningElement {
   messageContext;
   subscription = null;
 
+  connectedCallback() {
+    this.loadRecords();
+    this.subscribeToMessageChannel();
+    this.updateInfoMessages();
+  }
+
   updateConfirmButtonStatus() {
     this.disableConfirmButton = this.disableAllButtons || this.isOrderActivated || this.isContractInactive || this.noRecords;
   }
@@ -100,12 +106,6 @@ export default class OrderProducts extends LightningElement {
     return orderItemsToDelete;
   }
 
-  connectedCallback() {
-    this.loadRecords();
-    this.subscribeToMessageChannel();
-    this.updateInfoMessages();
-  }
-
   disableButtons() {
     this.disableAllButtons = true;
     this.updateConfirmButtonStatus();
@@ -121,6 +121,8 @@ export default class OrderProducts extends LightningElement {
       this.error = error.body.map(e => e.message).join(', ');
     } else if (typeof error.body?.message === 'string') {
       this.error = error.body.message;
+    } else if (typeof error.body === 'string') {
+      this.error = error.body;
     } else {
       this.error = 'Unknown error';
     }

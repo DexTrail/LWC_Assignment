@@ -1,0 +1,273 @@
+[ {
+  "attributes" : {
+    "type" : "PricebookEntry",
+    "url" : "/services/data/v52.0/sobjects/PricebookEntry/01u09000000rBSxAAM"
+  },
+  "Product2Id" : "01t09000002oQjmAAE",
+  "UnitPrice" : 5000.00,
+  "Id" : "01u09000000rBSxAAM",
+  "Product2" : {
+    "attributes" : {
+      "type" : "Product2",
+      "url" : "/services/data/v52.0/sobjects/Product2/01t09000002oQjmAAE"
+    },
+    "Name" : "GenWatt Diesel 10kW",
+    "Id" : "01t09000002oQjmAAE"
+  }
+}, {
+  "attributes" : {
+    "type" : "PricebookEntry",
+    "url" : "/services/data/v52.0/sobjects/PricebookEntry/01u09000000rBSyAAM"
+  },
+  "Product2Id" : "01t09000002oQjtAAE",
+  "UnitPrice" : 100000.00,
+  "Id" : "01u09000000rBSyAAM",
+  "Product2" : {
+    "attributes" : {
+      "type" : "Product2",
+      "url" : "/services/data/v52.0/sobjects/Product2/01t09000002oQjtAAE"
+    },
+    "Name" : "GenWatt Diesel 1000kW",
+    "Id" : "01t09000002oQjtAAE"
+  }
+}, {
+  "attributes" : {
+    "type" : "PricebookEntry",
+    "url" : "/services/data/v52.0/sobjects/PricebookEntry/01u09000000rBSzAAM"
+  },
+  "Product2Id" : "01t09000002oQjlAAE",
+  "UnitPrice" : 25000.00,
+  "Id" : "01u09000000rBSzAAM",
+  "Product2" : {
+    "attributes" : {
+      "type" : "Product2",
+      "url" : "/services/data/v52.0/sobjects/Product2/01t09000002oQjlAAE"
+    },
+    "Name" : "GenWatt Diesel 200kW",
+    "Id" : "01t09000002oQjlAAE"
+  }
+}, {
+  "attributes" : {
+    "type" : "PricebookEntry",
+    "url" : "/services/data/v52.0/sobjects/PricebookEntry/01u09000000r9ecAAA"
+  },
+  "Product2Id" : "01t09000002oQk0AAE",
+  "UnitPrice" : 150000.00,
+  "Id" : "01u09000000r9ecAAA",
+  "Product2" : {
+    "attributes" : {
+      "type" : "Product2",
+      "url" : "/services/data/v52.0/sobjects/Product2/01t09000002oQk0AAE"
+    },
+    "Name" : "GenWatt Gasoline 2000kW",
+    "Id" : "01t09000002oQk0AAE"
+  }
+}, {
+  "attributes" : {
+    "type" : "PricebookEntry",
+    "url" : "/services/data/v52.0/sobjects/PricebookEntry/01u09000000r9edAAA"
+  },
+  "Product2Id" : "01t09000002oQjyAAE",
+  "UnitPrice" : 35000.00,
+  "Id" : "01u09000000r9edAAA",
+  "Product2" : {
+    "attributes" : {
+      "type" : "Product2",
+      "url" : "/services/data/v52.0/sobjects/Product2/01t09000002oQjyAAE"
+    },
+    "Name" : "GenWatt Gasoline 300kW",
+    "Id" : "01t09000002oQjyAAE"
+  }
+}, {
+  "attributes" : {
+    "type" : "PricebookEntry",
+    "url" : "/services/data/v52.0/sobjects/PricebookEntry/01u09000000r9eeAAA"
+  },
+  "Product2Id" : "01t09000002oQjvAAE",
+  "UnitPrice" : 75000.00,
+  "Id" : "01u09000000r9eeAAA",
+  "Product2" : {
+    "attributes" : {
+      "type" : "Product2",
+      "url" : "/services/data/v52.0/sobjects/Product2/01t09000002oQjvAAE"
+    },
+    "Name" : "GenWatt Gasoline 750kW",
+    "Id" : "01t09000002oQjvAAE"
+  }
+}, {
+  "attributes" : {
+    "type" : "PricebookEntry",
+    "url" : "/services/data/v52.0/sobjects/PricebookEntry/01u09000000rBT0AAM"
+  },
+  "Product2Id" : "01t09000002oQjrAAE",
+  "UnitPrice" : 15000.00,
+  "Id" : "01u09000000rBT0AAM",
+  "Product2" : {
+    "attributes" : {
+      "type" : "Product2",
+      "url" : "/services/data/v52.0/sobjects/Product2/01t09000002oQjrAAE"
+    },
+    "Name" : "GenWatt Propane 100kW",
+    "Id" : "01t09000002oQjrAAE"
+  }
+}, {
+  "attributes" : {
+    "type" : "PricebookEntry",
+    "url" : "/services/data/v52.0/sobjects/PricebookEntry/01u09000000rBT1AAM"
+  },
+  "Product2Id" : "01t09000002oQjsAAE",
+  "UnitPrice" : 120000.00,
+  "Id" : "01u09000000rBT1AAM",
+  "Product2" : {
+    "attributes" : {
+      "type" : "Product2",
+      "url" : "/services/data/v52.0/sobjects/Product2/01t09000002oQjsAAE"
+    },
+    "Name" : "GenWatt Propane 1500kW",
+    "Id" : "01t09000002oQjsAAE"
+  }
+}, {
+  "attributes" : {
+    "type" : "PricebookEntry",
+    "url" : "/services/data/v52.0/sobjects/PricebookEntry/01u09000000rBT2AAM"
+  },
+  "Product2Id" : "01t09000002oQjpAAE",
+  "UnitPrice" : 50000.00,
+  "Id" : "01u09000000rBT2AAM",
+  "Product2" : {
+    "attributes" : {
+      "type" : "Product2",
+      "url" : "/services/data/v52.0/sobjects/Product2/01t09000002oQjpAAE"
+    },
+    "Name" : "GenWatt Propane 500kW",
+    "Id" : "01t09000002oQjpAAE"
+  }
+}, {
+  "attributes" : {
+    "type" : "PricebookEntry",
+    "url" : "/services/data/v52.0/sobjects/PricebookEntry/01u09000000rBT3AAM"
+  },
+  "Product2Id" : "01t09000002oQjnAAE",
+  "UnitPrice" : 85000.00,
+  "Id" : "01u09000000rBT3AAM",
+  "Product2" : {
+    "attributes" : {
+      "type" : "Product2",
+      "url" : "/services/data/v52.0/sobjects/Product2/01t09000002oQjnAAE"
+    },
+    "Name" : "Installation: Industrial - High",
+    "Id" : "01t09000002oQjnAAE"
+  }
+}, {
+  "attributes" : {
+    "type" : "PricebookEntry",
+    "url" : "/services/data/v52.0/sobjects/PricebookEntry/01u09000000rBT6AAM"
+  },
+  "Product2Id" : "01t09000002oQjzAAE",
+  "UnitPrice" : 20000.00,
+  "Id" : "01u09000000rBT6AAM",
+  "Product2" : {
+    "attributes" : {
+      "type" : "Product2",
+      "url" : "/services/data/v52.0/sobjects/Product2/01t09000002oQjzAAE"
+    },
+    "Name" : "Installation: Industrial - Low",
+    "Id" : "01t09000002oQjzAAE"
+  }
+}, {
+  "attributes" : {
+    "type" : "PricebookEntry",
+    "url" : "/services/data/v52.0/sobjects/PricebookEntry/01u09000000rBT4AAM"
+  },
+  "Product2Id" : "01t09000002oQk1AAE",
+  "UnitPrice" : 50000.00,
+  "Id" : "01u09000000rBT4AAM",
+  "Product2" : {
+    "attributes" : {
+      "type" : "Product2",
+      "url" : "/services/data/v52.0/sobjects/Product2/01t09000002oQk1AAE"
+    },
+    "Name" : "Installation: Industrial - Medium",
+    "Id" : "01t09000002oQk1AAE"
+  }
+}, {
+  "attributes" : {
+    "type" : "PricebookEntry",
+    "url" : "/services/data/v52.0/sobjects/PricebookEntry/01u09000000rBT5AAM"
+  },
+  "Product2Id" : "01t09000002oQjwAAE",
+  "UnitPrice" : 5000.00,
+  "Id" : "01u09000000rBT5AAM",
+  "Product2" : {
+    "attributes" : {
+      "type" : "Product2",
+      "url" : "/services/data/v52.0/sobjects/Product2/01t09000002oQjwAAE"
+    },
+    "Name" : "Installation: Portable",
+    "Id" : "01t09000002oQjwAAE"
+  }
+}, {
+  "attributes" : {
+    "type" : "PricebookEntry",
+    "url" : "/services/data/v52.0/sobjects/PricebookEntry/01u09000000rBT7AAM"
+  },
+  "Product2Id" : "01t09000002oQjuAAE",
+  "UnitPrice" : 10000.00,
+  "Id" : "01u09000000rBT7AAM",
+  "Product2" : {
+    "attributes" : {
+      "type" : "Product2",
+      "url" : "/services/data/v52.0/sobjects/Product2/01t09000002oQjuAAE"
+    },
+    "Name" : "SLA: Bronze",
+    "Id" : "01t09000002oQjuAAE"
+  }
+}, {
+  "attributes" : {
+    "type" : "PricebookEntry",
+    "url" : "/services/data/v52.0/sobjects/PricebookEntry/01u09000000rBT8AAM"
+  },
+  "Product2Id" : "01t09000002oQjxAAE",
+  "UnitPrice" : 30000.00,
+  "Id" : "01u09000000rBT8AAM",
+  "Product2" : {
+    "attributes" : {
+      "type" : "Product2",
+      "url" : "/services/data/v52.0/sobjects/Product2/01t09000002oQjxAAE"
+    },
+    "Name" : "SLA: Gold",
+    "Id" : "01t09000002oQjxAAE"
+  }
+}, {
+  "attributes" : {
+    "type" : "PricebookEntry",
+    "url" : "/services/data/v52.0/sobjects/PricebookEntry/01u09000000rBT9AAM"
+  },
+  "Product2Id" : "01t09000002oQjqAAE",
+  "UnitPrice" : 40000.00,
+  "Id" : "01u09000000rBT9AAM",
+  "Product2" : {
+    "attributes" : {
+      "type" : "Product2",
+      "url" : "/services/data/v52.0/sobjects/Product2/01t09000002oQjqAAE"
+    },
+    "Name" : "SLA: Platinum",
+    "Id" : "01t09000002oQjqAAE"
+  }
+}, {
+  "attributes" : {
+    "type" : "PricebookEntry",
+    "url" : "/services/data/v52.0/sobjects/PricebookEntry/01u09000000rBTAAA2"
+  },
+  "Product2Id" : "01t09000002oQjoAAE",
+  "UnitPrice" : 20000.00,
+  "Id" : "01u09000000rBTAAA2",
+  "Product2" : {
+    "attributes" : {
+      "type" : "Product2",
+      "url" : "/services/data/v52.0/sobjects/Product2/01t09000002oQjoAAE"
+    },
+    "Name" : "SLA: Silver",
+    "Id" : "01t09000002oQjoAAE"
+  }
+} ]

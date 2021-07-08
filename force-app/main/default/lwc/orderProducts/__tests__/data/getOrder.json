@@ -1,0 +1,82 @@
+{
+  "attributes": {
+    "type": "Order",
+    "url": "/services/data/v52.0/sobjects/Order/80109000000iRjUAAU"
+  },
+  "ContractId": "800090000016CSeAAM",
+  "Status": "Draft",
+  "Id": "80109000000iRjUAAU",
+  "OrderItems": [
+    {
+      "attributes": {
+        "type": "OrderItem",
+        "url": "/services/data/v52.0/sobjects/OrderItem/80209000001oP6XAAU"
+      },
+      "OrderId": "80109000000iRjUAAU",
+      "Id": "80209000001oP6XAAU",
+      "Product2Id": "01t09000002oQjtAAE",
+      "Quantity": 5.00,
+      "TotalPrice": 500000.00,
+      "UnitPrice": 100000.00,
+      "PricebookEntryId": "01u09000000rBSyAAM",
+      "Product2": {
+        "attributes": {
+          "type": "Product2",
+          "url": "/services/data/v52.0/sobjects/Product2/01t09000002oQjtAAE"
+        },
+        "Name": "GenWatt Diesel 1000kW",
+        "Id": "01t09000002oQjtAAE"
+      }
+    },
+    {
+      "attributes": {
+        "type": "OrderItem",
+        "url": "/services/data/v52.0/sobjects/OrderItem/80209000001oP6cAAE"
+      },
+      "OrderId": "80109000000iRjUAAU",
+      "Id": "80209000001oP6cAAE",
+      "Product2Id": "01t09000002oQjsAAE",
+      "Quantity": 1.00,
+      "TotalPrice": 120000.00,
+      "UnitPrice": 120000.00,
+      "PricebookEntryId": "01u09000000rBT1AAM",
+      "Product2": {
+        "attributes": {
+          "type": "Product2",
+          "url": "/services/data/v52.0/sobjects/Product2/01t09000002oQjsAAE"
+        },
+        "Name": "GenWatt Propane 1500kW",
+        "Id": "01t09000002oQjsAAE"
+      }
+    },
+    {
+      "attributes": {
+        "type": "OrderItem",
+        "url": "/services/data/v52.0/sobjects/OrderItem/80209000001oP6hAAE"
+      },
+      "OrderId": "80109000000iRjUAAU",
+      "Id": "80209000001oP6hAAE",
+      "Product2Id": "01t09000002oQjqAAE",
+      "Quantity": 2.00,
+      "TotalPrice": 80000.00,
+      "UnitPrice": 40000.00,
+      "PricebookEntryId": "01u09000000rBT9AAM",
+      "Product2": {
+        "attributes": {
+          "type": "Product2",
+          "url": "/services/data/v52.0/sobjects/Product2/01t09000002oQjqAAE"
+        },
+        "Name": "SLA: Platinum",
+        "Id": "01t09000002oQjqAAE"
+      }
+    }
+  ],
+  "Contract": {
+    "attributes": {
+      "type": "Contract",
+      "url": "/services/data/v52.0/sobjects/Contract/800090000016CSeAAM"
+    },
+    "Status": "Activated",
+    "Id": "800090000016CSeAAM"
+  }
+}

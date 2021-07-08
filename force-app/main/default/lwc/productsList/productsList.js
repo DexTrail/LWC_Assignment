@@ -31,6 +31,8 @@ export default class ProductsList extends LightningElement {
       this.error = error.body.map(e => e.message).join(', ');
     } else if (typeof error.body?.message === 'string') {
       this.error = error.body.message;
+    } else if (typeof error.body === 'string') {
+      this.error = error.body;
     } else {
       this.error = 'Unknown error';
     }
