@@ -12,29 +12,28 @@ export default class ProductsList extends LightningElement {
   error;
   pricebookEntries;
 
+  @wire(getPricebookEntries, { orderId: '$recordId' })
+  wirePriceBookEntries({ error, data }) {
+    if (data) {
+      this.pricebookEntries = data.length ? data : undefined;
+      this.error = undefined;
+    } else if (error) {
+      this.pricebookEntries = undefined;
+      this.errorHandler(error);
+    }
+  }
+
   @wire(MessageContext)
   messageContext;
 
-  connectedCallback() {
-    this.loadRecords();
-  }
-
-  loadRecords() {
-    getPricebookEntries({ orderId: this.recordId })
-      .then(result => {
-        this.pricebookEntries = result.length ? result : undefined;
-        this.error = undefined;
-      })
-      .catch(error => {
-        this.error = 'Unknown error';
-        if (Array.isArray(error.body)) {
-          this.error = error.body.map(e => e.message).join(', ');
-        } else if (typeof error.body.message === 'string') {
-          this.error = error.body.message;
-        }
-
-        this.pricebookEntries = undefined;
-      });
+  errorHandler(error) {
+    if (Array.isArray(error.body)) {
+      this.error = error.body.map(e => e.message).join(', ');
+    } else if (typeof error.body?.message === 'string') {
+      this.error = error.body.message;
+    } else {
+      this.error = 'Unknown error';
+    }
   }
 
   handleProductClick(event) {
