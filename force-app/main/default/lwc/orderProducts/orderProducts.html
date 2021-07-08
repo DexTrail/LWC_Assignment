@@ -17,7 +17,7 @@
 
     <!-- Order Items table -->
     <template if:false={noRecords}>
-      <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-p-horizontal_small">
+      <table class="slds-table slds-table_cell-buffer slds-table_bordered">
         <thead>
         <tr>
           <th>Product Name</th>
@@ -55,7 +55,7 @@
           class="slds-float_left"
           variant="brand"
           label="Save"
-          title="Save current Order"
+          title="Save current order"
           icon-name="utility:save"
           disabled={disableAllButtons}
           onclick={handleSave}>
@@ -78,7 +78,7 @@
         <lightning-button
           class="slds-float_right"
           variant="destructive"
-          label="Undo Changes"
+          label="Undo"
           title="Undo any changes before the last save"
           icon-name="utility:undo"
           disabled={disableAllButtons}

@@ -100,11 +100,11 @@ export default class OrderProducts extends LightningElement {
     return orderItemsToDelete;
   }
 
- connectedCallback() {
-   this.loadRecords();
-   this.subscribeToMessageChannel();
-   this.updateInfoMessages();
- }
+  connectedCallback() {
+    this.loadRecords();
+    this.subscribeToMessageChannel();
+    this.updateInfoMessages();
+  }
 
   disableButtons() {
     this.disableAllButtons = true;
@@ -131,7 +131,7 @@ export default class OrderProducts extends LightningElement {
       .then(result => {
         this.disableAllButtons = this.isOrderActivated = (result.Status === 'Activated');
         this.disableConfirmButton = this.isContractInactive = (result.Contract.Status !== 'Activated');
-        this.processSuccessResult(result.OrderItems);
+        this.processItemsAfterLoading(result.OrderItems);
       })
       .catch(error => {
         this.orderItemsObj = {};
@@ -155,7 +155,7 @@ export default class OrderProducts extends LightningElement {
   }
 
   /* Multiple queueing adds much complexity because we don't have one job Id to check it.
-     And confirmation should start after successful save... oh... */
+     And confirmation should start after successful save */
   checkAsyncStatus(confirmOnComplete) {
     getSaveAsyncStatus({ asyncStartedDatetime: this.asyncJobStartedDatetime })
       .then(result => {
@@ -175,11 +175,8 @@ export default class OrderProducts extends LightningElement {
       })
       .then(isComplete => {
         if (isComplete) {
-          if (confirmOnComplete) {
-            this.confirmOrder();
-          } else {
-            this.enableButtons();
-          }
+          if (confirmOnComplete) this.confirmOrder();
+          else this.enableButtons();
         } else {
           setTimeout(this.checkAsyncStatus.bind(this), 100, confirmOnComplete);
         }
@@ -222,7 +219,7 @@ export default class OrderProducts extends LightningElement {
       });
   }
 
-  processSuccessResult(orderItems) {
+  processItemsAfterLoading(orderItems) {
     this.error = undefined;
 
     if (orderItems && orderItems.length) {
