@@ -22,15 +22,13 @@ public without sharing class SaveOrderAsync implements Queueable {
         List<OrderItem> orderItemsToUpsertNow = new List<OrderItem>();
         Integer numberOfRecords = (orderItemsToUpsert.size() < MAX_RECORDS ? orderItemsToUpsert.size() : MAX_RECORDS);
         for (Integer i = 0; i < numberOfRecords; i++) {
-            orderItemsToUpsertNow.add(orderItemsToUpsert.get(0));
-            orderItemsToUpsert.remove(0);
+            orderItemsToUpsertNow.add(orderItemsToUpsert.remove(0));
         }
 
         List<OrderItem> orderItemsToDeleteNow = new List<OrderItem>();
         numberOfRecords = (orderItemsToDelete.size() < MAX_RECORDS ? orderItemsToDelete.size() : MAX_RECORDS);
         for (Integer i = 0; i < numberOfRecords; i++) {
-            orderItemsToDeleteNow.add(orderItemsToDelete.get(0));
-            orderItemsToDelete.remove(0);
+            orderItemsToDeleteNow.add(orderItemsToDelete.remove(0));
         }
 
         OrderProductsController.saveOrderItems(orderItemsToUpsertNow, orderItemsToDeleteNow);

@@ -149,6 +149,7 @@ export default class OrderProducts extends LightningElement {
     const datetime = new Date(Date.now());
     this.asyncJobStartedDatetime = datetime.toISOString();
     return queueSaveOrderItems({
+      orderId: this.recordId,
       orderItemsToUpsert: this.orderItemsList,
       orderItemsToDelete: orderItemsToDelete
     })

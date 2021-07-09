@@ -58,3 +58,8 @@ Once you build this, create a public repository on GitHub, check in all the comp
 4.	After the order is confirmed successfully in the external system the status of the order and order items will be updated to “Activated”
       a.	When activated the end user will not be able to add new order items or confirm the order for a second time.
 5.	A test coverage of at least 80% for both LWC components is required.
+
+
+## Updates:
+
+*2021-07-09* - Fixed a bug when new Order Items could be saved as different rows in one Order 

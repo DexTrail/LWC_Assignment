@@ -8,7 +8,6 @@ public with sharing class OrderProductsController {
     private static final String CONFIRM_ENDPOINT = 'https://pentagone.requestcatcher.com/';
     private static final Integer CONFIRM_TIMEOUT = 10000;
 
-
     @AuraEnabled(Cacheable=true)
     public static Order getOrder(Id orderId) {
         if (orderId == null) throw new AuraHandledException('getOrder(): orderId can\'t be null');
@@ -82,7 +81,28 @@ public with sharing class OrderProductsController {
     }
 
     @AuraEnabled
-    public static void queueSaveOrderItems(List<OrderItem> orderItemsToUpsert, List<OrderItem> orderItemsToDelete) {
+    public static void queueSaveOrderItems(Id orderId, List<OrderItem> orderItemsToUpsert, List<OrderItem> orderItemsToDelete) {
+        /* Need to check if item with the same Product2Id is in the order.
+           Because we don't update Id in LWC we can't rely on this information
+           (user can save order multiple time without reloading page) */
+        List<OrderItem> orderItems = [SELECT Product2Id FROM OrderItem WHERE OrderId = :orderId];
+        Map<Id, OrderItem> productIdToOrderItemMap = new Map<Id, OrderItem>();
+        for (OrderItem orderItem : orderItems) productIdToOrderItemMap.put(orderItem.Product2Id, orderItem);
+
+        // Update Ids for items to upsert
+        for (OrderItem orderItem : orderItemsToUpsert) {
+            OrderItem existingOrderItem = productIdToOrderItemMap.get(orderItem.Product2Id);
+            if (existingOrderItem != null) orderItem.Id = existingOrderItem.Id;
+        }
+
+        // Update Ids for items to delete
+        for (OrderItem orderItem : orderItemsToDelete) {
+            OrderItem existingOrderItem = productIdToOrderItemMap.get(orderItem.Product2Id);
+            if (existingOrderItem != null) orderItem.Id = existingOrderItem.Id;
+        }
+
+        /* We upsert all order items even there fields haven't changed (to update Last Modified Date).
+           Records can be filtered to insert new records and update only those with changed quantity (if needed) */
         System.enqueueJob(new SaveOrderAsync(orderItemsToUpsert, orderItemsToDelete));
     }
 

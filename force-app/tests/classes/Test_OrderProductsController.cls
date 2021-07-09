@@ -29,14 +29,20 @@ private class Test_OrderProductsController {
 
     @IsTest
     static void queueSaveOrderItems_EmptyLists() {
+        TestData.loadTestData();
+
+        List<OrderItem> orderItems = [SELECT Id FROM OrderItem];
+        delete orderItems;
+        Order order = [SELECT Id FROM Order WHERE Name = 'Order1'];
+
         List<OrderItem> orderItemsToUpsert = new List<OrderItem>();
         List<OrderItem> orderItemsToDelete = new List<OrderItem>();
 
         Test.startTest();
-        OrderProductsController.queueSaveOrderItems(orderItemsToUpsert, orderItemsToDelete);
+        OrderProductsController.queueSaveOrderItems(order.Id, orderItemsToUpsert, orderItemsToDelete);
         Test.stopTest();
 
-        List<OrderItem> orderItems = [SELECT Id FROM OrderItem];
+        orderItems = [SELECT Id FROM OrderItem];
         System.assert(orderItems.isEmpty());
     }
 
@@ -46,18 +52,39 @@ private class Test_OrderProductsController {
 
         List<OrderItem> orderItemsToDelete = new List<OrderItem>();
         List<OrderItem> orderItemsToUpsert = new List<OrderItem>();
-        OrderItem orderItem = [SELECT OrderId, Quantity, UnitPrice FROM OrderItem WHERE UnitPrice = 15];
+
+        OrderItem orderItem = [SELECT OrderId, Quantity, Product2Id, UnitPrice FROM OrderItem WHERE UnitPrice = 15];
+        orderItem.Quantity = 11;
+        orderItemsToUpsert.add(orderItem);
+
         Product2 product = [SELECT Id FROM Product2 WHERE Name = 'Product1'];
         PricebookEntry pricebookEntry = [SELECT Id FROM PricebookEntry WHERE UnitPrice = 1];
         orderItemsToUpsert.add(new OrderItem(OrderId=orderItem.OrderId, Product2Id=product.Id, PricebookEntryId=pricebookEntry.Id,
                 Quantity=37, UnitPrice=1));
 
         Test.startTest();
-        OrderProductsController.queueSaveOrderItems(orderItemsToUpsert, orderItemsToDelete);
+        OrderProductsController.queueSaveOrderItems(orderItem.OrderId, orderItemsToUpsert, orderItemsToDelete);
         Test.stopTest();
 
-        orderItem = [SELECT UnitPrice FROM OrderItem WHERE Quantity = 37];
-        System.assertEquals(1, orderItem.UnitPrice);
+        List<OrderItem> orderItems = [SELECT Quantity, UnitPrice FROM OrderItem WHERE OrderId = :orderItem.OrderId];
+        System.assertEquals(3, orderItems.size());
+
+        for (OrderItem item : orderItems) {
+            switch on String.valueOf(item.UnitPrice) {
+                when '1.00' {
+                    System.assertEquals(37, item.Quantity);
+                }
+                when '10.00' {
+                    System.assertEquals(2, item.Quantity);
+                }
+                when '15.00' {
+                    System.assertEquals(11, item.Quantity);
+                }
+                when else {
+                    throw new AssertException('Incorrect Quantity ' + item.Quantity + ' for Order Item with UnitPrice ' + item.UnitPrice);
+                }
+            }
+        }
     }
 
     @IsTest
@@ -66,11 +93,11 @@ private class Test_OrderProductsController {
 
         List<OrderItem> orderItemsToUpsert = new List<OrderItem>();
         List<OrderItem> orderItemsToDelete = new List<OrderItem>();
-        OrderItem orderItem = [SELECT OrderId, Quantity, UnitPrice FROM OrderItem WHERE UnitPrice = 15];
+        OrderItem orderItem = [SELECT OrderId, Quantity, Product2Id, UnitPrice FROM OrderItem WHERE UnitPrice = 15];
         orderItemsToDelete.add(orderItem);
 
         Test.startTest();
-        OrderProductsController.queueSaveOrderItems(orderItemsToUpsert, orderItemsToDelete);
+        OrderProductsController.queueSaveOrderItems(orderItem.OrderId, orderItemsToUpsert, orderItemsToDelete);
         Test.stopTest();
 
         List<OrderItem> orderItems = [SELECT Id FROM OrderItem WHERE Id = :orderItem.Id];
