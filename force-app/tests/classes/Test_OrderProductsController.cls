@@ -54,6 +54,7 @@ private class Test_OrderProductsController {
         List<OrderItem> orderItemsToUpsert = new List<OrderItem>();
 
         OrderItem orderItem = [SELECT OrderId, Quantity, Product2Id, UnitPrice FROM OrderItem WHERE UnitPrice = 15];
+        orderItem.Id = null;  // Simulate new product from front-end
         orderItem.Quantity = 11;
         orderItemsToUpsert.add(orderItem);
 
